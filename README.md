@@ -1,27 +1,27 @@
 # Research Software Development workshop
 
-This repository contains material for running a research software development
+This repository contains material for running a research software development (rsd)
 workshop.
 
-The material is based on a previous workshop which we designed with [@drvinceknight](https://twitter.com/drvinceknight)
-& [@GeraintPalmer](https://twitter.com/GeraintPalmer). That workshop can be
-found at https://vknight.org/rsd/.
+The material is based on a previous rsd workshop which we designed with [@drvinceknight](https://twitter.com/drvinceknight)
+& [@GeraintPalmer](https://twitter.com/GeraintPalmer). The material for the
+previous workshop are available at https://vknight.org/rsd/.
 
 
 # Installation
 
-This workshop is written in [Jupyter Notebook](https://jupyter.org), however,
+This workshop is written in [Jupyter Notebooks](https://jupyter.org), however,
 they are not required for the workshop.
 
-The requirements (with installation notes) can be found at _add link_.
+The requirements with installation notes can be found at [Installation [pre workshop]](https://github.com/Nikoleta-v3/rsd-workshop/blob/master/Installation%20%5Bpre%20workshop%5D.ipynb).
 
 # Topics
 
 The workshop covers:
 
 - Basic use of the command line
-- Best practice in writing computer code (the workshop uses Python but the ideas are applicable to any language)
 - Version control with git
+- Best practice in writing computer code (the workshop uses Python but the ideas are applicable to any language)
 - Setting up a repository in GitHub with license, tests, README, etc
 
 
@@ -40,7 +40,7 @@ The material is designed for a two days workshop. Suggested timetable:
 
 **Day II**
 
-- 10:00 - 11:30 GitHub exercise
+- 10:00 - 11:30 Best practices discussion
 - 11:30 - 11:45 Coffee break
 - 11:40 - 12:30 GitHub exercise
 - 12:30 - 13:30 Lunch

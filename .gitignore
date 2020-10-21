@@ -1,2 +1,5 @@
 *.ipynb_checkpoints/
 *.DS_store
+*_minted-main
+*.aux
+*.log
