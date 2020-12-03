@@ -1,7 +1,8 @@
 `make.py` is a file which generates `tex` and `pdf` files for each notebook in
-this tutorial. This can be used as a short cut if you need to print the material.
-Just run:
+this tutorial. The files are saved in the `Material in pdf/` folder.
+
+Just run the following command while on the root of the repository:
 
 ```
-$ python make.py
+$ python tools/make.py
 ```
