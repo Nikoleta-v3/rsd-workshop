@@ -3,3 +3,4 @@
 *_minted-main
 *.aux
 *.log
+.vscode/
