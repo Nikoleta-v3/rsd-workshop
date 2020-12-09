@@ -374,15 +374,13 @@
 \section{Introduction to command
 line}\label{introduction-to-command-line}}
 
-    Identify and open your command line interface. First, it is important to
-note that this will now differ (but not substantially) depending on
-whether or not you're on a Windows machine:
+    Identify and open your command line interface.
 
 \begin{itemize}
 \tightlist
 \item
-  Windows: we will choose to use \textbf{Anaconda Prompt} (which was
-  installed on your machine when you installed Anaconda).
+  Windows: we will choose to use \textbf{Git bash} (which was installed
+  on your machine when you installed Git).
 \item
   nix (another way to describe Mac OS and/or Linux machines): we will
   use the system \textbf{terminal}.
@@ -394,14 +392,6 @@ name.}\label{finding-your-computers-name.}}
 
 Let us first let's find out the name of your computer by running:
 
-\textbf{Windows}
-
-\begin{verbatim}
-$ echo %USERNAME%
-\end{verbatim}
-
-\textbf{nix}
-
 \begin{verbatim}
 $ whoami
 \end{verbatim}
@@ -411,16 +401,6 @@ $ whoami
 location}\label{finding-your-current-location}}
 
 Now let's find out which directory (folder) we are currently in:
-
-\textbf{Windows}
-
-\begin{verbatim}
-$ cd
-\end{verbatim}
-
-This stands for ``current directory''.
-
-\textbf{nix}
 
 \begin{verbatim}
 $ pwd
@@ -437,16 +417,6 @@ location}\label{seeing-what-is-in-your-current-location}}
 
 To view the contents of the current directory:
 
-\textbf{Windows}
-
-\begin{verbatim}
-$ dir
-\end{verbatim}
-
-This stands for ``directory''.
-
-\textbf{nix}
-
 \begin{verbatim}
 $ ls
 \end{verbatim}
@@ -460,8 +430,7 @@ directory in a graphical user interface and compare.
     \hypertarget{moving-to-another-location}{%
 \section{Moving to another location}\label{moving-to-another-location}}
 
-On both Windows and nix if you want to enter a directory that is in your
-current directory type:
+If you want to enter a directory that is in your current directory type:
 
 \begin{verbatim}
 $ cd <directory>
@@ -538,28 +507,12 @@ directory.
 
 To create a directory:
 
-\textbf{Windows}
-
-\begin{verbatim}
-$ echo <file_name>
-\end{verbatim}
-
-\textbf{nix}
-
 \begin{verbatim}
 $ touch <file_name>
 \end{verbatim}
 
 Experiment with creating a file named \texttt{addition.py} in the
 directory \texttt{rsd-workshop}.
-
-\textbf{Windows}
-
-\begin{verbatim}
-$ echo addition.py
-\end{verbatim}
-
-\textbf{nix}
 
 \begin{verbatim}
 $ touch addition.py
@@ -572,14 +525,6 @@ If you type \texttt{ls} you will see that the file has been created.
 
 To copy a file:
 
-\textbf{Windows}
-
-\begin{verbatim}
-$ copy <file> <new_file_directory_and_name>
-\end{verbatim}
-
-\textbf{nix}
-
 \begin{verbatim}
 $ cp <file> <new_file_directory_and_name>
 \end{verbatim}
@@ -590,14 +535,6 @@ Experiment with copying any file.
 \section{Moving/renaming files}\label{movingrenaming-files}}
 
 To move a file:
-
-\textbf{Windows}
-
-\begin{verbatim}
-$ move <file> <new_file_directory_and_name>
-\end{verbatim}
-
-\textbf{nix}
 
 \begin{verbatim}
 $ mv <file> <new_file_directory_and_name>
@@ -614,14 +551,6 @@ for confirmation if move/mv were to overwrite another file. Be careful.
 
 To delete a file:
 
-\textbf{Windows}
-
-\begin{verbatim}
-$ del <file>
-\end{verbatim}
-
-\textbf{nix}
-
 \begin{verbatim}
 $ rm <file>
 \end{verbatim}
@@ -632,27 +561,11 @@ directories}\label{copying-and-removing-directories}}
 
 To copy a directory:
 
-\textbf{Windows}
-
-\begin{verbatim}
-$ xcopy <dir> <target>
-\end{verbatim}
-
-\textbf{nix}
-
 \begin{verbatim}
 $ cp -r <dir> <target>
 \end{verbatim}
 
 To remove a directory:
-
-\textbf{Windows}
-
-\begin{verbatim}
-$ rmdir /s <dir>
-\end{verbatim}
-
-\textbf{nix}
 
 \begin{verbatim}
 $ rm -r <dir>

@@ -370,10 +370,14 @@
     
 
     
-    \hypertarget{introduction-to-git}{%
-\section{Introduction to git}\label{introduction-to-git}}
+    \hypertarget{introduction-to-version-control-with-git}{%
+\section{Introduction to Version Control with
+GIT}\label{introduction-to-version-control-with-git}}
 
-    \textbf{Version control} is a system which:
+    \hypertarget{introduction}{%
+\subsection{Introduction}\label{introduction}}
+
+\textbf{Version control} is a system which:
 
 \begin{itemize}
 \tightlist
@@ -383,13 +387,64 @@
   tracks their development
 \item
   provides the ability to recall previous versions of files.
+\item
+  facilitates collaborative editing of files by different parties.
 \end{itemize}
 
 This type of system is essential for ensuring reproducibility of
 scientific research
 
-There are a number of popular tools for version control, the particular
+Why should I care obout version control? Probably most of us have at
+some point in their career (some earlier, some later) come across as
+situation where they had to write document that evolved over time.It
+starts out simple, than more and more content comes in, often content
+needs to be reorganized, certain parts will be deleted or moved to other
+places. Changes introduced are reverted and changed in a different way
+etc. More often than not one wishes to travel back in time to an earlier
+stage in the history of the project.
+
+    There are a number of popular tools for version control, the particular
 tool we will use is \textbf{git}.
+
+    A ``poor man's version control'' system is shown in this directory
+listing:
+
+    \begin{verbatim}
+ls ~/poor_VC
+
+paper_final.tex         paper_v2_richard.tex
+paper_really_final.tex  paper_v2.tex
+paper.tex               paper_v3_with_richards_comments.tex
+paper_v1.tex
+\end{verbatim}
+
+    \includegraphics{static/timeline.png}\\
+Source: https://git-scm.com/book/en/v2
+
+    The git version control system can be thought of as a iterative workflow
+where paper documents move between various places: - The modified state:
+The document is on our desk before us and we edit (write) it. - Staged:
+When our task on the document is done or we have to work on sth else, we
+put the file into a shelf that has a label ``Keep'' on it. It can be
+thought of as a stash of documents that we need to keep within reach but
+are not actively working on it. From that stash, we can easily pull the
+document back to our desk and continue working on it. - Committed: At
+some point, we would like to take a snapshot of the document, so we can
+re-open precisely the current state at a later point in time. In a paper
+world, we would take the stash of documents to the copy machine, make a
+copy from each document and put the copy into a file cabinet, tagged
+with a date, our name, and a remark telling us what the change of this
+copy with respect to the previous copy is. The original document is now
+in a ``unmodified'' state (with respect to the last backup copy).
+
+We then take the document back to our desk and continue working on it:
+It is then again in the ``modified state''.
+
+    \begin{figure}
+\centering
+\includegraphics{static/track.png}
+\caption{image.png}
+\end{figure}
 
     \hypertarget{setting-up-git}{%
 \section{Setting up git}\label{setting-up-git}}
@@ -411,6 +466,16 @@ service or similar. It just stays with your project.
 \textbf{Windows} Note that all these commands work on the anaconda
 prompt but if you want to use tab completion you can use the git bash
 command line specifically for git.
+
+Moreover, we are going to set \href{https://www.nano-editor.org}{Nano}
+as the default editor for git. For unix you can use the following
+command:
+
+\begin{verbatim}
+$ git config --global core.editor "nano"
+\end{verbatim}
+
+We are going to use Nano later in order to write a commit message.
 
     \hypertarget{initialising-a-git-repository}{%
 \section{Initialising a git
@@ -441,6 +506,8 @@ $ git status
 
 We should see something like:
 
+\includegraphics{static/git_status.png}
+
     There are various pieces of useful information here, first of all that
 \texttt{addition.py}, \texttt{if-statement.py} and
 \texttt{while-loops.py} are not currently tracked files.
@@ -453,6 +520,12 @@ $ git add addition.py
 
 If we run git status again we see:
 
+\includegraphics{static/git_status_after_add.png}
+
+    We have propagated our file from the ``Untracked'' to the ``Staged''
+status.\\
+\includegraphics{static/staged.png}
+
     So the \texttt{addition.py} file is now ready to be ``committed''.
 
 \begin{verbatim}
@@ -460,38 +533,21 @@ $ git commit
 \end{verbatim}
 
 When doing this, a text editor should open up prompting you to write
-what is called a commit message. Your machine will probably have one of
-the following command line editors set up as a default:
+what is called a commit message. In our case the text editor that opens
+is Nano.
+
+For the purposes of using git Nano is more than a sufficient editor, all
+you need to know how to do is:
 
 \begin{itemize}
 \tightlist
 \item
-  \href{https://www.nano-editor.org}{Nano}
+  Write in Nano: just type;
 \item
-  \href{https://www.vim.org}{Vim}
+  Save in Nano: Ctrl + O;
+\item
+  Quit in Nano: Ctrl + X.
 \end{itemize}
-
-For the purposes of using git these are more than sufficient, all you
-need to know how to do is:
-
-\begin{itemize}
-\tightlist
-\item
-  Write (in Nano: just type, in Vim: press i and type);
-\item
-  Save (in Nano: Ctrl + O, in Vim: press esc, then :, then w + Enter);
-\item
-  Quit (in Nano: Ctrl + X, in Vim: press esc, then :, then q + Enter).
-\end{itemize}
-
-\textbf{Note} it is possible to set up a different default editor but
-instructions for this can be machine specific.
-
-For unix you can use the following command:
-
-\begin{verbatim}
-$ git config --global core.editor "nano"
-\end{verbatim}
 
     Type the following as the first commit message:
 
@@ -504,6 +560,8 @@ Addition script contains a function which adds two numbers.
 save and exit.
 
 git should confirm that you have successfully made your first commit.
+
+\includegraphics{static/git_commit.png}
 
     \textbf{Note} A commit message is made up of 2 main components:
 
@@ -527,6 +585,16 @@ git should confirm that you have successfully made your first commit.
 
 A commit is a snapshot that git makes of your project, you should use
 this at meaningful steps of the progress of a project.
+
+    Now, our file is in the ``Unmodified'' state, because it is identical to
+the \emph{copy} that we filed away to our ``file cabinet'' (the location
+where git stores the snapshots).
+
+\begin{figure}
+\centering
+\includegraphics{static/unmodified.png}
+\caption{image.png}
+\end{figure}
 
     \hypertarget{ignoring-files}{%
 \section{Ignoring files}\label{ignoring-files}}
@@ -598,7 +666,18 @@ $ git status
 
 We now see that git is aware of a change to our file:
 
-To see what has been modified you need to type:
+\includegraphics{static/modified.png}
+
+    Our file is now in the modified state, as \texttt{git\ status} will tell
+us.
+
+\begin{figure}
+\centering
+\includegraphics{static/to_modified.png}
+\caption{image.png}
+\end{figure}
+
+    To see what has been modified you need to type:
 
 \begin{verbatim}
 $ git diff addition
@@ -638,6 +717,8 @@ $ git log
 \end{verbatim}
 
 This displays the full log of the project:
+
+\includegraphics{static/git_log.png}
 
 We see that there are 3 commits there, each with a seemingly random set
 of numbers and characters. This set of characters is called a ``hash''.
@@ -686,8 +767,8 @@ branch called \texttt{implement-add-odd-numbers}:
 $ git branch implement-add-odd-numbers
 \end{verbatim}
 
-When we now type git branch we see that 2 branches exist but the active
-branch is indicated by *:
+When we now type \texttt{git\ branch} we see that 2 branches exist but
+the active branch is indicated by *:
 
 \begin{verbatim}
 implement-add-odd-numbers
@@ -697,7 +778,7 @@ implement-add-odd-numbers
 To move to this new branch the command is:
 
 \begin{verbatim}
-$ git implement-add-odd-numbers
+$ git checkout implement-add-odd-numbers
 \end{verbatim}
 
 Run \texttt{git\ branch} and then \texttt{git\ status} to see how this
@@ -746,6 +827,100 @@ Branches allow us to bring work from different people done in parallel
 and merged them to the main branch of the repository. This can be done
 locally using \texttt{git} and also on the cloud using GitHub. This is
 demonstrated in the material of Day II in the GitHub example.
+
+    \hypertarget{time-travel-checking-out-a-previous-commit}{%
+\subsection{Time travel: Checking out a (previous)
+commit}\label{time-travel-checking-out-a-previous-commit}}
+
+    The \texttt{git\ checkout} commands allows us to revert our file(s) to a
+state from an earlier commit. Find the commit hash to revert to from
+\texttt{git\ log} first. Highlight the hash and copy it (Ctrl-C). Then
+paste into the \texttt{git\ checkout} command. It's actually sufficient
+to take only the first 8 characters from the hash.
+
+    \begin{verbatim}
+$ git checkout fbb2cd03
+\end{verbatim}
+
+    The message about ``detached HEAD'' means that our file(s) have now
+reverted to a state from an earlier commit. Any changes to our files
+would not be commited directy back to our branch (more about branches
+further below).
+
+    The history reported by \texttt{git\ log} now contains only the commits
+before the checked out commit as you can see by running
+
+\begin{verbatim}
+$ git log
+\end{verbatim}
+
+    \hypertarget{check-out-the-tip-of-the-branch-aka-head}{%
+\subsection{Check out the tip of the branch (aka
+HEAD)}\label{check-out-the-tip-of-the-branch-aka-head}}
+
+    To go back to the ``tip of the branch'' (the state where we left from
+before checking out an earlier commit) we run
+
+    \begin{verbatim}
+$ git checkout master
+\end{verbatim}
+
+    \begin{verbatim}
+$ git status
+\end{verbatim}
+
+    \begin{verbatim}
+$ git log
+\end{verbatim}
+
+    \hypertarget{merging-locally}{%
+\subsubsection{Merging locally}\label{merging-locally}}
+
+The \texttt{git\ merge} command integrates changes from a branch into
+the currently checked out branch. Before merging, make sure to have
+checked out the target branch. In our example we merge changes from the
+``implement-add-odd-numbers'' branch into the ``master'' branch.
+
+    \begin{verbatim}
+$ git checkout master
+
+Switched to branch 'master'
+\end{verbatim}
+
+    Now use the \texttt{git\ merge} command to bring in the changes from the
+``implement-add-odd-numbers'' branch. It is good practice to always
+append the \texttt{-\/-no-ff} flag to \texttt{git\ merge} to create a
+dedicated merge commit. In this way one can later identify changes in
+the code that are a result from a merge.
+
+    \begin{verbatim}
+$ git merge implement-add-odd-numbers --no-ff -m "Merge implement-add-odd-numbers"
+\end{verbatim}
+
+    Let's now look at our history. I will append some flags to
+\texttt{git\ log} here that will visualize the tree-like structure of
+our history:
+
+    \begin{verbatim}
+$ git log --pretty=oneline --graph --abbrev-commit
+\end{verbatim}
+
+    \hypertarget{delete-feature-branch}{%
+\subsubsection{Delete feature branch}\label{delete-feature-branch}}
+
+If we are certain that the feature branch \texttt{iss53} will no longer
+be used, we can delete it:
+
+    \begin{verbatim}
+$ git branch -D implement-add-odd-numbers
+\end{verbatim}
+
+    \texttt{git\ branch} will tell us that master is now our only branch
+again.
+
+    \begin{verbatim}
+$ git branch
+\end{verbatim}
 
 
     % Add a bibliography block to the postdoc

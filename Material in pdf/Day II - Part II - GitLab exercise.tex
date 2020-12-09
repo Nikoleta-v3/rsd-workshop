@@ -146,7 +146,7 @@
     \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
     % Document parameters
     % Document title
-    \title{Day II - Part II - GitHub exercise}
+    \title{Day II - Part II - GitLab exercise}
     
     
     
@@ -370,105 +370,231 @@
     
 
     
-    \hypertarget{github-exercise}{%
-\section{GitHub exercise}\label{github-exercise}}
+    \hypertarget{gitlab-exercise}{%
+\section{GitLab exercise}\label{gitlab-exercise}}
 
 The final part of the workshop focuses on implementing a software
 package for calculating different distance measures. The exercise uses
-the hosting service GitHub.
+the git repository server at GWDG ``GitLab''.
 
 This part of the workshop covers:
 
 \begin{itemize}
 \tightlist
 \item
-  Creating GitHub repositories
+  Creating GitLab repositories
+\item
+  Adding a Open Source License
 \item
   Packaging and testing software
 \item
-  Creating pull request
-\item
-  Lincense
-\item
   Package documentation
 \item
-  Continuous integration
+  Creating merge requests
+\item
+  Continuous integration (automated building and testing).
 \end{itemize}
 
-    GitHub is one hosting service but several other exists, for example:
+    Here we use gitlab since it does not require any additional registration
+procedure. For the sake of completeness, here is a (non-comprehensive)
+list of alternative git hosting services:
 
 \begin{itemize}
 \tightlist
 \item
-  GitLab: https://about.gitlab.com
+  github (https://github.com): probably the best know git service, free
+  of charge for public repositories
+\item
+  bitbucket (https://bitbucket.com): From the Atlassian family, let's
+  you have a limited number of private repositories for free.
+\item
+  gitlab (https://gitlab.com): Github's main contender. Easy to deploy
+  as institutional service.
 \end{itemize}
 
-    \hypertarget{log-in-github}{%
-\section{Log in GitHub}\label{log-in-github}}
+Here, we use the gitlab installation at GWDG. Everybody with a
+\texttt{*.mpg.*} email address automatically also has a gitlab account
+at GWDG. You can create as many public, private, or internal
+repositories as you like. Advanced features like Continuous Integration
+are part of the service, no Third Parties involved.
 
-Initially make sure that you are logged in your GitHub account:
-https://github.com.
+There is also a gitlab instance at MPI EvolBio, but the version is a bit
+outdated and it is missing many of the features that we will use in the
+workshop.
 
-    \hypertarget{create-a-repository-for-the-project}{%
-\section{Create a repository for the
-project}\label{create-a-repository-for-the-project}}
+    \hypertarget{log-into-gitlab}{%
+\section{Log into GitLab}\label{log-into-gitlab}}
+
+Navigate to https://gitlab.gwdg.de and log in with your institutional
+email address and password.
+
+    \hypertarget{add-a-ssh-key-to-your-gitlab-profile}{%
+\section{Add a ssh key to your gitlab
+profile}\label{add-a-ssh-key-to-your-gitlab-profile}}
+
+The folks at GWDG are a bit crazy about security. Therefore, you can
+only push (upload commits) after configuring your account for
+\emph{passwordless} authentication using ssh keys.
+
+\hypertarget{create-ssh-keypair.}{%
+\subsubsection{Create ssh keypair.}\label{create-ssh-keypair.}}
+
+If you already have a ssh keypair on your local computer, skip this
+step. Otherwise, follow these instructions:
+
+\begin{itemize}
+\tightlist
+\item
+  Run the following command in a shell (git shell on windows)
+\end{itemize}
+
+\begin{verbatim}
+$ ssh-keygen
+\end{verbatim}
+
+Simply accept all default settings by pressing {[}Enter{]} on each
+prompt. For simplicity, do not enter a key passphrase.
+
+\hypertarget{upload-public-key-to-gitlab.}{%
+\subsubsection{Upload public key to
+gitlab.}\label{upload-public-key-to-gitlab.}}
+
+** This step is mandatory unless your public key is already uploaded to
+gitlab. **
+
+First paste your public key to the command line:
+
+\begin{verbatim}
+$ cat ~/.ssh/id_rsa.pub
+\end{verbatim}
+
+Then use your mouse to copy the entire public key. It start with
+\texttt{ssh-rsa} and ends with your username and hostname of your
+computer. E.g., here is the begin and end of my public key:
+
+\begin{verbatim}
+ssh-rsa AAAA...inxol6NQ== grotec@micropop037
+\end{verbatim}
+
+\textbf{NOTE} Disclosing \emph{public} ssh keys is no security issue.
+But \textbf{NEVER EVER} disclose your \emph{private} key. It's in the
+same directory and has the same filename except for the extension.
+
+Now navigate to your gitlab profile by clicking on your avatar icon in
+the top right corner of your gitlab page. Then select \texttt{Settings}.
+
+\begin{figure}
+\centering
+\includegraphics{static/new_repo.png}
+\caption{Screenshot\_2020-12-07\_15-57-29.png}
+\end{figure}
+
+On your profile setting page, go to \texttt{SSH\ Keys} in the left
+navigation panel, paste your public ssh key into the text box. Click
+\texttt{Add\ key} to submit the new key.
+
+    \hypertarget{create-a-repository-aka-project}{%
+\section{Create a repository (aka
+Project)}\label{create-a-repository-aka-project}}
 
     A software repository, or ``repo'' for short, is a storage location for
-software packages.
+software packages. A repository is managed through a version control
+system. Here, we use git.
 
-To create a repository on GitHub click on ``New'' located at the left
+To create a repository on gitlab click on ``New'' located at the left
 side of the home page.
 
-\includegraphics{static/creating_a_repo_part_one.png}
+\begin{figure}
+\centering
+\includegraphics{static/new_repo_part_two.png}
+\caption{gitlab\_new\_project}
+\end{figure}
 
     Here we are going to create the project's repository.
 
 \begin{itemize}
 \tightlist
 \item
-  \textbf{Repository name}: distances
+  \textbf{Repository name}: distances (this will automatically fill in
+  the project slug, the last part of the repository URL.
 \item
-  \textbf{Description}: A package for calculating different distance
-  measures.
+  \textbf{Description}: A python package for calculating various
+  distance measures.
 \item
-  \textbf{Private}. We are going to create a private repository as this
-  is an artificial exercise.
+  \textbf{Private}. We are going to create a public repository, so
+  outsiders can use and contribute to our amazing code.
 \item
-  \textbf{Initialize this repository}. GitHub allows us to initialize a
-  repository with a series of standard files. We want to include:
-
-  \begin{itemize}
-  \tightlist
-  \item
-    A README. A README file contains information about other files in a
-    directory or archive of computer software.
-  \item
-    A .gitignore. Select the templete Python
-  \item
-    A lincense. Select the MIT License.
-  \end{itemize}
+  \textbf{Initialize repository with a README}. GitLab allows us to
+  initialize a repository with a README file. A README file contains
+  information about other files in a directory or archive of computer
+  software.
 \end{itemize}
 
-    \includegraphics{static/creating_a_repo_part_two.png}
+    \begin{figure}
+\centering
+\includegraphics{static/repo_details.png}
+\caption{Screenshot\_2020-12-07\_13-46-01.png}
+\end{figure}
 
-    We click \texttt{create\ repository} and this creates our repository.
+    We click \texttt{Create\ project} to finalize the creation of our
+repository.
+
+After a while, we will be redirected to the front page of our new
+repository, looking somewhat like this:
+\includegraphics{static/repo_created.png}
+
+To complete the setup, we will add a license file. Click on
+\texttt{Add\ LICENSE}. Since this is a public repository, we will add an
+Open Source License. Here, we choose the MIT License. Click on
+\texttt{Apply\ a\ template} and type ``MIT'' into the search field. Then
+click on ``MIT License''.
+
+\begin{figure}
+\centering
+\includegraphics{static/license.png}
+\caption{Screenshot\_2020-12-07\_14-38-11.png}
+\end{figure}
+
+Finally click on \texttt{Commit\ changes}. Congratulations! You have
+just pushed your first commit to the repository.
 
     \hypertarget{clone-the-repository}{%
 \section{Clone the repository}\label{clone-the-repository}}
 
-When we create a repository on GitHub, we create a project that exists
-as a remote repository. We can clone our repositories to create a local
-copy on our computers and sync between the two locations.
+When we create a repository on GitLab, the new project exists as a
+\emph{remote} repository. It serves as the central \emph{hub} where all
+changes to the code base will be collected and where prospective users
+go to download the code. While GitLab allows you to edit the code
+online, developers typically work on a local copy (i.e.~on their
+laptop/desktop computer) of the repository (a \emph{clone}) and
+synchronize changes between the local repo (or multiple local copies on
+different computers) and the remote repo using \texttt{git}.
 
-To clone a GitHub repository we need to copy it's address:
+To clone a GitLab repository we need to copy its address. On the front
+page of your newly created repo, click on \texttt{Clone} and then on the
+\texttt{Copy} icon next to the \textbf{first} web address, the one
+starting with ``git''.
 
-\includegraphics{static/repository_s_address.png}
+\begin{figure}
+\centering
+\includegraphics{static/clone.png}
+\caption{Screenshot\_2020-12-07\_16-19-48.png}
+\end{figure}
 
-and run the following command in a terminal/command prompt:
+Then run the following command in a terminal/command prompt:
 
 \begin{verbatim}
 $ git clone <the_address_we_just_copied>
 \end{verbatim}
+
+\textbf{Hint}: On most terminals you can right-click and paste the
+copied text into the command line.
+
+The \texttt{git\ clone} command will create a new directory named like
+the repository, ``distances'' right under your current working
+directory.
+
+\textbf{Q:} Remember how to detect the current working directory?
 
 Make sure that you run this command while on the location you want to
 clone the repository.
@@ -478,15 +604,56 @@ the following commands:
 
 \begin{verbatim}
 $ cd Desktop
-$ git clone https://github.com/Nikoleta-v3/distances.git
+$ git clone https://gitlab.gwdg.de/<GITLAB_USERNAME>/distances.git
 \end{verbatim}
 
-    \hypertarget{brach}{%
-\section{Brach}\label{brach}}
+    Now it's time to start developing. First, change into the repository's
+directory:
 
-When working on a project we hardly ever work on the \texttt{master}
-branch. Instead we create different branches for working on different
-parts of a project.
+\begin{verbatim}
+$ cd distances
+\end{verbatim}
+
+    Before we start implementing our package, we will add one more
+configuration file to our repository, the \texttt{.gitignore} file. This
+file lists all files and filename patterns that we do \textbf{not} want
+to be monitored by git. For example, we may not want to include files
+generated when running our code. Running python code typically results
+in the creation of various ``compiled'' files with extensions like .pyc
+or .pyo (depending on the operating system). To exclude such files from
+being monitored by git, we run the following command:
+
+\begin{verbatim}
+$ echo "*.pyc" > .gitignore
+$ echo "*.pyo" >> .gitignore
+\end{verbatim}
+
+\textbf{Q:} What's the meaning of ``\textgreater{}'' and
+``\textgreater\textgreater{}'' in above commands? Why not using
+``\textgreater{}'' again in the second command?
+
+    This creates the \texttt{.gitignore} file in the repository root
+directory.
+
+\textbf{Q:} List all files in the repository root directory. Can you
+confirm that the \texttt{.gitignore} file was created?
+
+    To put the \texttt{.gitignore} file under version control, we add and
+commit it to our repo:
+
+\begin{verbatim}
+$ git add .gitignore
+$ git commit .gitignore -m "Add gitignore file."
+\end{verbatim}
+
+    \hypertarget{branches}{%
+\section{Branches}\label{branches}}
+
+A freshly created project has only one branch, \texttt{master}. It is
+good practise to not work on the master branch directly. This way, we
+can make sure that the tip of the master branch always reflects the last
+stable (i.e.~tested) point in the history of the code. Instead we create
+different branches for working on different parts of a project.
 
 So let's create a branch called \texttt{implement-distances-package}.
 
@@ -503,8 +670,13 @@ $ git checkout implement-distances-package
 |--- README.md
 \end{verbatim}
 
-Spend some time now to familirie yourself with the structure and the
+Spend some time now to familiarize yourself with the structure and the
 current files of the repository.
+
+\textbf{Qs:} - List all files (including hidden files). - Look at the
+commit history (log). - What is the current status of your repo? - Which
+branches exist? - Which branch is checked out? - List the content of the
+hidden directory \texttt{.git}.
 
     \hypertarget{implement-the-distance-function}{%
 \section{Implement the distance
@@ -512,8 +684,9 @@ function}\label{implement-the-distance-function}}
 
 We are now ready to write a package that calculates distances.
 
-\textbf{1.} We will create a folder called \texttt{distances}. This can
-be done with the command:
+\textbf{1.} Inside our repository root directory, we will create
+a(nother) folder called \texttt{distances}. This can be done with the
+command:
 
 \begin{verbatim}
 $ mkdir distances
@@ -532,7 +705,7 @@ code:
 
 \KeywordTok{def}\NormalTok{ euclidean\_distance(u, v):}
     \CommentTok{"""}
-\CommentTok{    Computes the Euclidean distance between two vectos \textasciigrave{}u\textasciigrave{} and \textasciigrave{}v\textasciigrave{}.}
+\CommentTok{    Computes the Euclidean distance between two vectors \textasciigrave{}u\textasciigrave{} and \textasciigrave{}v\textasciigrave{}.}
 
 \CommentTok{    The Euclidean distance between \textasciigrave{}u\textasciigrave{} and \textasciigrave{}v\textasciigrave{}, is defined as:}
 
@@ -561,6 +734,13 @@ code:
 
 \textbf{3.} Now that the function is implemented we need to commit the
 change.
+
+It is always good practice, to check the status of your repo before
+making any changes.
+
+\textbf{Q:} Confirm that the new file is currently untracked.
+
+Now add it to the repo:
 
 \begin{verbatim}
 $ git add distances/euclidean.py
@@ -824,31 +1004,47 @@ of our project on GitHub.
 To do that you need to run the following command:
 
 \begin{verbatim}
-$ git push origin implement-distances-package
+$ git push -u origin implement-distances-package
 \end{verbatim}
 
 and then you should something like this:
 
-\includegraphics{static/git_push.png}
+\begin{figure}
+\centering
+\includegraphics{static/push.png}
+\caption{Screenshot\_2020-12-07\_15-22-06.png}
+\end{figure}
 
-    Once you have run the command open GitHub and navigate your project.
+    Once you have run the command open your repository on GitLab.
 
-There you should see the following:
+There you should see the following on the top of your page:
+\includegraphics{static/notification_git_lab.png}
 
-\includegraphics{static/GitHub_new_branch.png}
+Click on \texttt{Create\ merge\ request}.
 
-Click on \texttt{Compare\ \&\ pull\ request}.
+GitLab then transfers you to the \texttt{Merge\ request} page. Here you
+can review the changes you have made and \texttt{request} for your code
+to become part of the projects main branch.
 
-GitHub then transfers you to \texttt{Pull\ request}. Here you can review
-the changes you have made and \texttt{request} for your code to become
-part of the projects main branch.
+Take sometime to familiarize yourself with the \texttt{Merge\ request}
+page and then click on \texttt{Submit\ merge\ request}.
 
-Take sometime to familirize yourself with the \texttt{Pull\ request}
-page and then click on \texttt{Create\ pull\ request}.
+The page will then refresh and you can again review the changes. Once
+all issues (if any) are resolved, you can finally accept the merge
+request by clicking the \texttt{Merge} button. All changes from the
+\texttt{implement-distances-package} branch will then be incorporated
+into the master branch. Optionally, the old branch is deleted.
 
-\includegraphics{static/pull_request.png}
+\begin{figure}
+\centering
+\includegraphics{static/pull_request_gitlab.png}
+\caption{Screenshot\_2020-12-07\_15-27-46.png}
+\end{figure}
 
-Congratulations you have created your first pull request!!!!!!
+Congratulations you have created and merged your first merge request!
+
+\textbf{NOTE}: On github, the corresponding functionality is called
+``Pull request''.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{ }{\boxspacing}
