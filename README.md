@@ -42,9 +42,9 @@ The material is designed for a two days workshop. Suggested timetable:
 
 - 10:00 - 11:30 Best practices discussion
 - 11:30 - 11:45 Coffee break
-- 11:40 - 12:30 GitHub exercise
+- 11:40 - 12:30 GitLab exercise
 - 12:30 - 13:30 Lunch
-- 13:30 - 16:00 GitHub exercise and closing remarks
+- 13:30 - 16:00 GitLab exercise and closing remarks
 
 # Contributions
 
