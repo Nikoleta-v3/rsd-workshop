@@ -31,12 +31,13 @@ The material is designed for a two days workshop. Suggested timetable:
 
 **Day I**
 
-- 10:00 - 10:15 Introduction, check for installations
-- 10:15 - 11:00 An introduction to command line
-- 11:00 - 11:15 Coffee break
-- 11:15 - 12:30 An introduction to Python
+- 11:00 - 11:15 Introduction, check for installations
+- 11:15 - 11:45 An introduction to command line
+- 11:45 - 12:30 An introduction to Python
 - 12:30 - 13:30 Lunch
-- 13:30 - 16:00 Git and closing remarks
+- 13:30 - 14:30 Git
+- 14:30 - 14:45 Coffee break
+- 14:45 - 16:00 Git and closing remarks
 
 **Day II**
 
